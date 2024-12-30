@@ -36,3 +36,9 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Flatten Maven Plugin ###
+.flattened-pom.xml
+
+### Logs ###
+logs/
