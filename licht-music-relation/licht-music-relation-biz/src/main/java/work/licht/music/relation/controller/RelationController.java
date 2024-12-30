@@ -41,7 +41,7 @@ public class RelationController {
 
     @PostMapping("/fan/list")
     @ApiOperationLog(description = "查询用户粉丝列表")
-    public PageResponse<FindFanUserRespVO> findFansList(@Validated @RequestBody FindFanListReqVO findFanListReqVO) {
+    public PageResponse<FindFanUserRespVO> findFanList(@Validated @RequestBody FindFanListReqVO findFanListReqVO) {
         return relationService.findFanList(findFanListReqVO);
     }
 

@@ -350,9 +350,9 @@ public class RelationServiceImpl implements RelationService {
         // 页码
         Integer pageNo = findFanListReqVO.getPageNo();
         // 先从 Redis 中查询
-        String fansListRedisKey = RedisKeyConstants.buildUserFanKey(userId);
+        String fanListRedisKey = RedisKeyConstants.buildUserFanKey(userId);
         // 查询目标用户粉丝列表 ZSet 的总大小
-        long total = redisTemplate.opsForZSet().zCard(fansListRedisKey);
+        long total = redisTemplate.opsForZSet().zCard(fanListRedisKey);
         // 返参
         List<FindFanUserRespVO> findFanUserRespVOS = null;
         // 每页展示 10 条数据
@@ -367,7 +367,7 @@ public class RelationServiceImpl implements RelationService {
             long offset = PageResponse.getOffset(pageNo, limit);
             // 使用 ZREVRANGEBYSCORE 命令按 score 降序获取元素，同时使用 LIMIT 子句实现分页
             Set<Object> followingUserIdsSet = redisTemplate.opsForZSet()
-                    .reverseRangeByScore(fansListRedisKey, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, offset, limit);
+                    .reverseRangeByScore(fanListRedisKey, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, offset, limit);
             if (CollUtil.isNotEmpty(followingUserIdsSet)) {
                 // 提取所有用户 ID 到集合中
                 List<Long> userIds = followingUserIdsSet.stream().map(object -> Long.valueOf(object.toString())).toList();
@@ -392,18 +392,18 @@ public class RelationServiceImpl implements RelationService {
                 // RPC: 调用用户服务、计数服务，并将 DTO 转换为 VO
                 findFanUserRespVOS = rpcUserServiceAndDTO2FanVO(userIds);
                 // 异步将粉丝列表同步到 Redis
-                threadPoolTaskExecutor.submit(() -> syncFansList2Redis(userId));
+                threadPoolTaskExecutor.submit(() -> syncFanList2Redis(userId));
             }
         }
         return PageResponse.success(findFanUserRespVOS, pageNo, total);
     }
 
     // 粉丝列表同步到 Redis
-    private void syncFansList2Redis(Long userId) {
+    private void syncFanList2Redis(Long userId) {
         List<FanDO> fanDOList = fanDOMapper.selectListByUserId(userId, 5000);
         if (CollUtil.isNotEmpty(fanDOList)) {
             // 用户粉丝列表 Redis Key
-            String fansListRedisKey = RedisKeyConstants.buildUserFanKey(userId);
+            String fanListRedisKey = RedisKeyConstants.buildUserFanKey(userId);
             // 随机过期时间
             // 保底1天+随机秒数
             long expireSeconds = 60*60*24 + RandomUtil.randomInt(60*60*24);
@@ -413,7 +413,7 @@ public class RelationServiceImpl implements RelationService {
             DefaultRedisScript<Long> script = new DefaultRedisScript<>();
             script.setScriptSource(new ResourceScriptSource(new ClassPathResource("/lua/follow_batch_add_and_expire.lua")));
             script.setResultType(Long.class);
-            redisTemplate.execute(script, Collections.singletonList(fansListRedisKey), luaArgs);
+            redisTemplate.execute(script, Collections.singletonList(fanListRedisKey), luaArgs);
         }
     }
 
@@ -422,11 +422,11 @@ public class RelationServiceImpl implements RelationService {
         int argsLength = fanDOList.size() * 2 + 1;
         Object[] luaArgs = new Object[argsLength];
         int i = 0;
-        for (FanDO fansDO : fanDOList) {
+        for (FanDO fanDO : fanDOList) {
             // 粉丝的关注时间作为 score
-            luaArgs[i] = DateUtils.localDateTime2Timestamp(fansDO.getCreateTime());
+            luaArgs[i] = DateUtils.localDateTime2Timestamp(fanDO.getCreateTime());
             // 粉丝的用户 ID 作为 ZSet value
-            luaArgs[i + 1] = fansDO.getFanUserId();
+            luaArgs[i + 1] = fanDO.getFanUserId();
             i += 2;
         }
         luaArgs[argsLength - 1] = expireSeconds; // 最后一个参数是 ZSet 的过期时间
