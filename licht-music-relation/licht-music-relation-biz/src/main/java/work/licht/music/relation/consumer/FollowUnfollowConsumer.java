@@ -31,7 +31,7 @@ import java.util.Objects;
 @Slf4j
 @Component
 @RocketMQMessageListener(
-    consumerGroup = "licht_music_group", // Group 组
+    consumerGroup = "licht_music_relation_group", // Group 组
     topic = RocketMQConstants.TOPIC_FOLLOW_OR_UNFOLLOW, // 消费的 Topic 主题
     consumeMode = ConsumeMode.ORDERLY // 顺序消费
 )

@@ -12,7 +12,7 @@ import work.licht.music.post.service.PostService;
 @Component
 @Slf4j
 @RocketMQMessageListener(
-        consumerGroup = "licht_music_group", // 消费者组
+        consumerGroup = "licht_music_post_group", // 消费者组
         topic = RocketMQConstants.TOPIC_DELETE_POST_LOCAL_CACHE, // 消费主题
         messageModel = MessageModel.BROADCASTING // 广播模式
 )
