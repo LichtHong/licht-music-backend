@@ -1,0 +1,9 @@
+storage:
+  minio:
+    endpoint: http://localhost:9000
+    accessKey: uuVTs4npPzBVpfc3MGAy
+    secretKey: g0TLnS19YvmVb9NUEINYMj3bc2kduMC4qz0SviHN
+  aliyun-oss:
+    endpoint: oss-cn-hangzhou.aliyuncs.com
+    accessKey: accessKey
+    secretKey: secretKey

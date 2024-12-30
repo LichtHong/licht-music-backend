@@ -1,0 +1,5 @@
+spring:
+  cassandra:
+    keyspace-name: licht_music
+    contact-points: localhost
+    port: 9042

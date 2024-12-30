@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Id" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="licht-music-id-biz" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="work.licht.music.id.LichtMusicIdBizApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

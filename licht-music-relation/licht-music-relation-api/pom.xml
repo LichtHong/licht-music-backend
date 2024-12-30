@@ -1,0 +1,24 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>work.licht.music</groupId>
+        <artifactId>licht-music-relation</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <groupId>work.licht.music.relation</groupId>
+    <artifactId>licht-music-relation-api</artifactId>
+    <name>licht-music-relation-api</name>
+    <description>用户关系服务RPC层</description>
+
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>work.licht.music.common</groupId>
+            <artifactId>licht-music-common</artifactId>
+        </dependency>
+    </dependencies>
+</project>

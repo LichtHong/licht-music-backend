@@ -1,0 +1,19 @@
+spring:
+  data:
+    redis:
+      database: 0
+      host: localhost
+      port: 6379
+      password: 20240414
+      timeout: 8s
+      connect-timeout: 8s
+      lettuce:
+        pool:
+          max-active: 256
+          max-wait: -1ms
+          min-idle: 0
+          max-idle: 8
+
+aliyun:
+  accessKeyId: LTAI5tCmG1ME7oUjLbn1xEEz
+  accessKeySecret: Re1HYwFQ4FwYKvFmaQPqRY3AEAGxYd

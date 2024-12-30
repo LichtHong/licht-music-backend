@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: licht-music-gateway # 应用名称
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        enabled: true # 启用服务发现
+        group: DEFAULT_GROUP # 所属组
+        namespace: f631f48c-ad5a-41cd-b99a-7bbe15721e03 # 命名空间
+        server-addr: localhost:8848 # Nacos 服务器地址
+        username: nacos
+        password: 20240414

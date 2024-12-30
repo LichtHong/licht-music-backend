@@ -1,0 +1,115 @@
+name: licht-music-backend
+
+services:
+  nacos:
+    image: nacos/nacos-server:latest
+    environment:
+      MODE: standalone
+      NACOS_AUTH_ENABLE: true
+      NACOS_AUTH_IDENTITY_KEY: root
+      NACOS_AUTH_IDENTITY_VALUE: 20240414
+      NACOS_AUTH_TOKEN: dkJKMVlETlhQcVgyNTl3OEJNd0oza3RkZDZEdXVrRVk=
+    networks:
+      - licht-music-backend
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+    volumes:
+      - E:/volumes/nacos:/home/nacos/data
+
+  zookeeper:
+    image: zookeeper:latest
+    command: zkServer.sh start-foreground
+    environment:
+      TZ: Asia/Shanghai
+    networks:
+      - licht-music-backend
+    ports:
+      - "2181:2181"
+      - "2888:2888"
+      - "3888:3888"
+      - "8083:8080"
+    volumes:
+      - E:/volumes/zookeeper/conf:/conf
+      - E:/volumes/zookeeper/data:/data
+      - E:/volumes/zookeeper/logs:/logs
+      - E:/volumes/zookeeper/datalog:/datalog
+
+  mysql:
+    image: mysql:lts
+    command: mysqld
+    environment:
+      MYSQL_ROOT_PASSWORD: 20240414
+    networks:
+      - licht-music-backend
+    ports:
+      - "3306:3306"
+      - "33060:33060"
+    volumes:
+      - E:/volumes/mysql:/var/lib/mysql
+
+  cassandra:
+    image: cassandra:latest
+    command: cassandra -f
+    networks:
+      - licht-music-backend
+    ports:
+      - "7000:7000"
+      - "7001:7001"
+      - "7199:7199"
+      - "9042:9042"
+      - "9160:9160"
+    volumes:
+      - E:/volumes/cassandra:/var/lib/cassandra
+
+  redis:
+    image: redis:latest
+    command: redis-server --appendonly "yes" --requirepass "20240414"
+    networks:
+      - licht-music-backend
+    ports:
+      - "6379:6379"
+    volumes:
+      - E:/volumes/redis:/data
+
+  minio:
+    image: minio/minio:latest
+    command: minio server /data --console-address :9001
+    environment:
+      MINIO_ROOT_USER: root
+      MINIO_ROOT_PASSWORD: 20240414
+    networks:
+      - licht-music-backend
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - E:/volumes/minio:/data
+
+  rocketmq-namesrv:
+    image: apache/rocketmq:latest
+    command: sh mqnamesrv
+    networks:
+      - licht-music-backend
+    ports:
+      - "9876:9876"
+
+  rocketmq-broker:
+    image: apache/rocketmq:latest
+    command: sh mqbroker -c /home/rocketmq/conf/broker.conf
+    environment:
+      - NAMESRV_ADDR=rocketmq-namesrv:9876
+    depends_on:
+      - rocketmq-namesrv
+    networks:
+      - licht-music-backend
+    ports:
+      - "10909:10909"
+      - "10911:10911"
+      - "10912:10912"
+    volumes:
+      - E:/volumes/rocketmq/conf/broker.conf:/home/rocketmq/conf/broker.conf
+
+networks:
+  licht-music-backend:
+    driver: bridge

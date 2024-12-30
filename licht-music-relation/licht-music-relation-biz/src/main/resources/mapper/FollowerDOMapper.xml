@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="work.licht.music.relation.domain.mapper.FollowerDOMapper">
+  <resultMap id="BaseResultMap" type="work.licht.music.relation.domain.model.FollowerDO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="follower_user_id" jdbcType="BIGINT" property="followerUserId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, follower_user_id, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_follower
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+      user_id, follower_user_id, create_time
+    from t_follower
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <select id="selectCountByUserId" resultType="long" parameterType="long">
+    select count(1) from t_follower where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <select id="selectPageListByUserId" resultMap="BaseResultMap" parameterType="map">
+    select follower_user_id
+    from t_follower
+    where user_id = #{userId,jdbcType=BIGINT}
+    order by create_time desc
+    limit #{offset,jdbcType=BIGINT}, #{limit,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_follower
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByUserIdAndFollowerUserId" parameterType="map">
+      delete
+      from t_follower
+      where user_id = #{userId,jdbcType=BIGINT}
+        and follower_user_id = #{unfollowUserId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="work.licht.music.relation.domain.model.FollowerDO">
+    insert into t_follower (id, user_id, follower_user_id,
+      create_time)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{followerUserId,jdbcType=BIGINT},
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="work.licht.music.relation.domain.model.FollowerDO">
+    insert into t_follower
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="followerUserId != null">
+        follower_user_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="followerUserId != null">
+        #{followerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="work.licht.music.relation.domain.model.FollowerDO">
+    update t_follower
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="followerUserId != null">
+        follower_user_id = #{followerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="work.licht.music.relation.domain.model.FollowerDO">
+    update t_follower
+    set user_id = #{userId,jdbcType=BIGINT},
+      follower_user_id = #{followerUserId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

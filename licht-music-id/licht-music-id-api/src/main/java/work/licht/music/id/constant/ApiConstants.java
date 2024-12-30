@@ -1,0 +1,7 @@
+package work.licht.music.id.constant;
+
+public interface ApiConstants {
+
+    // 服务名称
+    String SERVICE_NAME = "licht-music-id";
+}

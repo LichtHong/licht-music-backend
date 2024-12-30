@@ -1,0 +1,126 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>work.licht.music</groupId>
+        <artifactId>licht-music-user</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <groupId>work.licht.music.user</groupId>
+    <artifactId>licht-music-user-biz</artifactId>
+    <name>licht-music-user-biz</name>
+    <description>用户服务业务模块</description>
+
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-bootstrap</artifactId>
+        </dependency>
+
+        <!-- 服务发现 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+
+        <!-- Mybatis -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- MySQL 驱动 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+
+        <!-- Druid 数据库连接池 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-3-starter</artifactId>
+        </dependency>
+
+        <!-- Redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+
+        <!-- Redis 连接池 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+
+        <!-- Caffeine 本地缓存 -->
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>work.licht.music.common</groupId>
+            <artifactId>licht-music-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>work.licht.music.log</groupId>
+            <artifactId>licht-music-spring-boot-starter-log</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>work.licht.music.gson</groupId>
+            <artifactId>licht-music-spring-boot-starter-gson</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>work.licht.music.context</groupId>
+            <artifactId>licht-music-spring-boot-starter-context</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>work.licht.music.oss</groupId>
+            <artifactId>licht-music-oss-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>work.licht.music.user</groupId>
+            <artifactId>licht-music-user-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>work.licht.music.id</groupId>
+            <artifactId>licht-music-id-api</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            
+            <!-- 代码生成器 -->
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+</project>

@@ -1,0 +1,59 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://localhost:3306/licht_music?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: EMz/IYyVsPmXUVBfhxJ3copt+h+9udMyhzNXWT9ETsq5xya6sFdYMaRvoS5H+Th0ohdueu6njZPMszYuv/Kivw==
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      connection-properties: config.decrypt=true;config.decrypt.key=MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALVWK+UBY76awNInTaGqVVcr9nUALwEKjISW+OD80TM9AZC9AUd4edv4qW3uw5xg7f+gbL1ZzXoB80FewZCXH/MCAwEAAQ==
+      max-wait: 60000
+      pool-prepared-statements: false
+      validation-query: SELECT 1
+      web-stat-filter:
+        enabled: true
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-username: root
+        login-password: 20240414
+      filter:
+        config:
+          enabled: true
+        stat:
+          enabled: true
+          log-slow-sql: true
+          merge-sql: true
+        wall:
+          config:
+            multi-statement-allow: true
+  data:
+    redis:
+      database: 0
+      host: localhost
+      port: 6379
+      password: 20240414
+      timeout: 8s
+      connect-timeout: 8s
+      lettuce:
+        pool:
+          max-active: 256
+          max-wait: -1ms
+          min-idle: 0
+          max-idle: 8
+
+logging:
+  level:
+    work.licht.music.post.domain.mapper: debug
+
+rocketmq:
+  name-server: localhost:9876 # name server 地址
+  producer:
+    group: licht_music_group
+    send-message-timeout: 3000 # 消息发送超时时间，默认 3s
+    retry-times-when-send-failed: 3 # 同步发送消息失败后，重试的次数
+    retry-times-when-send-async-failed: 3 # 异步发送消息失败后，重试的次数
+    max-message-size: 4096 # 消息最大大小（单位：字节）
+  consumer:
+    group: licht_music_group
+    pull-batch-size: 5 # 每次拉取的最大消息数
