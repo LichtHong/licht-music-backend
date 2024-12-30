@@ -1,4 +1,4 @@
-package work.licht.music.kv.dto.req;
+package work.licht.music.kv.model.dto.req;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package work.licht.music.kv.dto.req;
+package work.licht.music.kv.model.dto.req;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class FindPostContentReqDTO {
+public class DeletePostContentReqDTO {
 
     @NotBlank(message = "帖子内容UUID不能为空")
     private String uuid;

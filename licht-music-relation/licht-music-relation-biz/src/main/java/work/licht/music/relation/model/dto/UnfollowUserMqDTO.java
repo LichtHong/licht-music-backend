@@ -1,4 +1,4 @@
-package work.licht.music.relation.model.vo;
+package work.licht.music.relation.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

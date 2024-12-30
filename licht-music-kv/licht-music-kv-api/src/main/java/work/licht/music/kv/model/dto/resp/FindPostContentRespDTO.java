@@ -1,4 +1,4 @@
-package work.licht.music.kv.dto.resp;
+package work.licht.music.kv.model.dto.resp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
