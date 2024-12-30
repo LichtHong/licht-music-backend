@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/cassandra_localhost-post_content-2024_12_30_08_44_53.sql" dialect="CassandraQL" />
     <file url="file://$PROJECT_DIR$/licht-music-post/licht-music-post-biz/src/main/resources/mapper/PostDOMapper.xml" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/mysql_localhost-leaf-2024_12_30_08_40_42.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/mysql_localhost-licht_music-2024_12_30_08_37_05.sql" dialect="MySQL" />
     <file url="PROJECT" dialect="MySQL" />
   </component>
 </project>
