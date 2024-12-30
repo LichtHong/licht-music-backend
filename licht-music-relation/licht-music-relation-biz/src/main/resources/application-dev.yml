@@ -44,7 +44,7 @@ spring:
 
 logging:
   level:
-    work.licht.music.post.domain.mapper: debug
+    work.licht.music.relation.domain.mapper: debug
 
 rocketmq:
   name-server: localhost:9876 # name server 地址
