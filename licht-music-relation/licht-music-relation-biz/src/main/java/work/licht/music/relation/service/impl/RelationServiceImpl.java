@@ -370,7 +370,7 @@ public class RelationServiceImpl implements RelationService {
                     .reverseRangeByScore(fanListRedisKey, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY, offset, limit);
             if (CollUtil.isNotEmpty(followingUserIdsSet)) {
                 // 提取所有用户 ID 到集合中
-                List<Long> userIds = followingUserIdsSet.stream().map(object -> Long.valueOf(object.toString())).toList();
+                List<Long> userIds = followingUserIdsSet.stream().map(object -> ((Number) object).longValue()).toList();
                 // RPC: 批量查询用户信息
                 findFanUserRespVOS = rpcUserServiceAndDTO2FanVO(userIds);
             }
