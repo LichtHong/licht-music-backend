@@ -1,0 +1,21 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>work.licht.music</groupId>
+        <artifactId>licht-music-backend</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <artifactId>licht-music-search</artifactId>
+    <name>licht-music-search</name>
+    <description>搜索服务</description>
+
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>licht-music-search-api</module>
+        <module>licht-music-search-biz</module>
+    </modules>
+</project>

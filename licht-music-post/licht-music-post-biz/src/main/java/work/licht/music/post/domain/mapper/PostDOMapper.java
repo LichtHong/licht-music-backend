@@ -11,6 +11,11 @@ public interface PostDOMapper {
 
     PostDO selectByPrimaryKey(Long id);
 
+    int selectCountByPostId(Long postId);
+
+    // 查询帖子的发布者用户 ID
+    Long selectCreatorIdByPostId(Long postId);
+
     int updateByPrimaryKeySelective(PostDO row);
 
     int updateByPrimaryKey(PostDO row);

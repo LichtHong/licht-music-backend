@@ -16,37 +16,30 @@
     from t_follower
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <select id="selectByUserId" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select
-      user_id, follower_user_id, create_time
-    from t_follower
-    where user_id = #{userId,jdbcType=BIGINT}
-  </select>
   <select id="selectCountByUserId" resultType="long" parameterType="long">
     select count(1) from t_follower where user_id = #{userId,jdbcType=BIGINT}
   </select>
   <select id="selectPageListByUserId" resultMap="BaseResultMap" parameterType="map">
-    select follower_user_id
-    from t_follower
-    where user_id = #{userId,jdbcType=BIGINT}
-    order by create_time desc
-    limit #{offset,jdbcType=BIGINT}, #{limit,jdbcType=BIGINT}
+    select follower_user_id from t_follower
+    where user_id = #{userId,jdbcType=BIGINT} order by create_time desc limit #{offset,jdbcType=BIGINT}, #{limit,jdbcType=BIGINT}
+  </select>
+  <select id="selectListByUserId" resultMap="BaseResultMap">
+    select follower_user_id, create_time from t_follower
+    where user_id = #{userId,jdbcType=BIGINT} order by create_time desc limit #{limit,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_follower
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByUserIdAndFollowerUserId" parameterType="map">
-      delete
-      from t_follower
-      where user_id = #{userId,jdbcType=BIGINT}
-        and follower_user_id = #{unfollowUserId,jdbcType=BIGINT}
+    delete from t_follower
+    where user_id = #{userId,jdbcType=BIGINT}
+      and follower_user_id = #{followerUserId,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="work.licht.music.relation.domain.model.FollowerDO">
-    insert into t_follower (id, user_id, follower_user_id,
-      create_time)
-    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{followerUserId,jdbcType=BIGINT},
-      #{createTime,jdbcType=TIMESTAMP})
+      insert into t_follower (id, user_id, follower_user_id, create_time)
+      values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{followerUserId,jdbcType=BIGINT},
+              #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="work.licht.music.relation.domain.model.FollowerDO">
     insert into t_follower

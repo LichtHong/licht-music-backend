@@ -7,10 +7,10 @@ import work.licht.music.common.exception.BizException;
 import work.licht.music.common.response.Response;
 import work.licht.music.kv.domain.model.PostContentDO;
 import work.licht.music.kv.domain.repository.PostContentRepository;
-import work.licht.music.kv.dto.req.AddPostContentReqDTO;
-import work.licht.music.kv.dto.req.DeletePostContentReqDTO;
-import work.licht.music.kv.dto.req.FindPostContentReqDTO;
-import work.licht.music.kv.dto.resp.FindPostContentRespDTO;
+import work.licht.music.kv.model.dto.req.AddPostContentReqDTO;
+import work.licht.music.kv.model.dto.req.DeletePostContentReqDTO;
+import work.licht.music.kv.model.dto.req.FindPostContentReqDTO;
+import work.licht.music.kv.model.dto.resp.FindPostContentRespDTO;
 import work.licht.music.kv.enums.ResponseCodeEnum;
 import work.licht.music.kv.service.PostContentService;
 

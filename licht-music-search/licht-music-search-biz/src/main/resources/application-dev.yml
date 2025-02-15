@@ -1,0 +1,11 @@
+elasticsearch:
+  host: localhost
+  port: 9200
+canal:
+  host: localhost
+  port: 11111
+  destination: search
+  dbUsername: canal
+  dbPassword: 20240414
+  subscribe: licht_music.t_post, licht_music.t_user
+  batchSize: 1000

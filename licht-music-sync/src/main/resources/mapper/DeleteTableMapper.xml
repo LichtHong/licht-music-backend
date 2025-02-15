@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="work.licht.music.sync.domain.mapper.DeleteTableMapper">
+
+    <delete id="deleteSyncFollowingCountTempTable" parameterType="map">
+        DROP TABLE IF EXISTS `t_sync_following_count_temp_${tableNameSuffix}`;
+    </delete>
+
+    <delete id="deleteSyncFollowerCountTempTable" parameterType="map">
+        DROP TABLE IF EXISTS `t_sync_follower_count_temp_${tableNameSuffix}`;
+    </delete>
+
+    <delete id="deleteSyncPostLikeCountTempTable" parameterType="map">
+        DROP TABLE IF EXISTS `t_sync_post_like_count_temp_${tableNameSuffix}`;
+    </delete>
+
+    <delete id="deleteSyncPostCollectCountTempTable" parameterType="map">
+        DROP TABLE IF EXISTS `t_sync_post_collect_count_temp_${tableNameSuffix}`;
+    </delete>
+
+    <delete id="deleteSyncUserPublishCountTempTable" parameterType="map">
+        DROP TABLE IF EXISTS `t_sync_user_publish_count_temp_${tableNameSuffix}`;
+    </delete>
+
+    <delete id="deleteSyncUserLikeCountTempTable" parameterType="map">
+        DROP TABLE IF EXISTS `t_sync_user_like_count_temp_${tableNameSuffix}`;
+    </delete>
+
+    <delete id="deleteSyncUserCollectCountTempTable" parameterType="map">
+        DROP TABLE IF EXISTS `t_sync_user_collect_count_temp_${tableNameSuffix}`;
+    </delete>
+    
+</mapper>

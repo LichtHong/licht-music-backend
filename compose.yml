@@ -37,7 +37,7 @@ services:
 
   mysql:
     image: mysql:lts
-    command: mysqld
+    command: mysqld --mysql-native-password
     environment:
       MYSQL_ROOT_PASSWORD: 20240414
     networks:
@@ -46,7 +46,7 @@ services:
       - "3306:3306"
       - "33060:33060"
     volumes:
-      - E:/volumes/mysql:/var/lib/mysql
+      - E:/volumes/mysql/data:/var/lib/mysql
 
   cassandra:
     image: cassandra:latest
@@ -63,8 +63,9 @@ services:
       - E:/volumes/cassandra:/var/lib/cassandra
 
   redis:
-    image: redis:latest
-    command: redis-server --appendonly "yes" --requirepass "20240414"
+    image: redis/redis-stack-server:latest
+    environment:
+      REDIS_ARGS: --appendonly yes --requirepass 20240414
     networks:
       - licht-music-backend
     ports:
@@ -98,7 +99,7 @@ services:
     image: apache/rocketmq:latest
     command: sh mqbroker -c /home/rocketmq/conf/broker.conf
     environment:
-      - NAMESRV_ADDR=rocketmq-namesrv:9876
+      NAMESRV_ADDR: rocketmq-namesrv:9876
     depends_on:
       - rocketmq-namesrv
     networks:
@@ -109,6 +110,65 @@ services:
       - "10912:10912"
     volumes:
       - E:/volumes/rocketmq/conf/broker.conf:/home/rocketmq/conf/broker.conf
+
+  xxl-job-admin:
+    image: xuxueli/xxl-job-admin:2.4.2
+    environment:
+      PARAMS: --server.port=7777 --spring.datasource.url=jdbc:mysql://mysql:3306/xxl_job?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai --spring.datasource.username=root --spring.datasource.password=20240414 --spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+    networks:
+      - licht-music-backend
+    ports:
+      - "7777:7777"
+
+  elasticsearch:
+    image: elasticsearch:7.17.26
+    environment:
+      discovery.type: single-node
+      ES_JAVA_OPTS: -Xms1024m -Xmx1024m
+    networks:
+      - licht-music-backend
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - E:/volumes/elasticsearch/data:/usr/share/elasticsearch/data
+      - E:/volumes/elasticsearch/plugins:/usr/share/elasticsearch/plugins
+
+  kibana:
+    image: kibana:7.17.26
+    environment:
+      I18N_LOCALE: zh-CN
+    networks:
+      - licht-music-backend
+    ports:
+      - "5601:5601"
+    volumes:
+      - E:/volumes/kibana/data:/usr/share/kibana/data
+
+  #  logstash:
+  #    image: logstash:7.17.26
+  #    networks:
+  #      - licht-music-backend
+  #    volumes:
+  #      - E:/volumes/logstash/data:/usr/share/logstash/data
+  #      - E:/volumes/logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml
+  #      - E:/volumes/logstash/pipeline:/usr/share/logstash/pipeline
+
+  canal:
+    image: canal/canal-server:latest
+    environment:
+      canal.destinations: search
+      canal.instance.master.address: mysql:3306
+      canal.instance.dbUsername: canal
+      canal.instance.dbPassword: 20240414
+    networks:
+      - licht-music-backend
+    ports:
+      - "11110:11110"
+      - "11111:11111"
+      - "11112:11112"
+      - "9100:9100"
+
 
 networks:
   licht-music-backend:

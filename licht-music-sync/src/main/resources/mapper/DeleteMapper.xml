@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="work.licht.music.sync.domain.mapper.DeleteMapper">
+
+    <delete id="batchDeleteSyncFollowingCountTempTable" parameterType="list">
+        delete from `t_sync_following_count_temp_${tableNameSuffix}`
+        where user_id in
+        <foreach collection="userIds" open="(" item="userId" close=")" separator=",">
+            #{userId}
+        </foreach>
+    </delete>
+
+    <delete id="batchDeleteSyncFollowerCountTempTable" parameterType="list">
+        delete from `t_sync_follower_count_temp_${tableNameSuffix}`
+        where user_id in
+        <foreach collection="userIds" open="(" item="userId" close=")" separator=",">
+            #{userId}
+        </foreach>
+    </delete>
+
+    <delete id="batchDeleteSyncUserPublishCountTempTable" parameterType="list">
+        delete from `t_sync_user_publish_count_temp_${tableNameSuffix}`
+        where user_id in
+        <foreach collection="userIds" open="(" item="userId" close=")" separator=",">
+            #{userId}
+        </foreach>
+    </delete>
+
+    <delete id="batchDeleteSyncUserLikeCountTempTable" parameterType="list">
+        delete from `t_sync_user_like_count_temp_${tableNameSuffix}`
+        where user_id in
+        <foreach collection="userIds" open="(" item="userId" close=")" separator=",">
+            #{userId}
+        </foreach>
+    </delete>
+
+    <delete id="batchDeleteSyncUserCollectCountTempTable" parameterType="list">
+        delete from `t_sync_user_collect_count_temp_${tableNameSuffix}`
+        where user_id in
+        <foreach collection="userIds" open="(" item="userId" close=")" separator=",">
+            #{userId}
+        </foreach>
+    </delete>
+
+    <delete id="batchDeleteSyncPostLikeCountTempTable" parameterType="list">
+        delete from `t_sync_post_like_count_temp_${tableNameSuffix}`
+        where post_id in
+        <foreach collection="postIds" open="(" item="postId" close=")" separator=",">
+            #{postId}
+        </foreach>
+    </delete>
+
+    <delete id="batchDeleteSyncPostCollectCountTempTable" parameterType="list">
+        delete from `t_sync_post_collect_count_temp_${tableNameSuffix}`
+        where post_id in
+        <foreach collection="postIds" open="(" item="postId" close=")" separator=",">
+            #{postId}
+        </foreach>
+    </delete>
+    
+</mapper>

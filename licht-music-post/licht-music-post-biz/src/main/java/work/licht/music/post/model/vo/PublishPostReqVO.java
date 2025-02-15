@@ -17,13 +17,12 @@ public class PublishPostReqVO {
     @NotNull(message = "帖子类型不能为空")
     private Integer type;
 
-    private List<String> imgUri;
-
-    private String videoUri;
-
     private String title;
+
+    private String cover;
 
     private String content;
 
     private Long topicId;
+
 }

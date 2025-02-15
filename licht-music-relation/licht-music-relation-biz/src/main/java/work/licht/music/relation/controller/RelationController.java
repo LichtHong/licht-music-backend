@@ -33,16 +33,16 @@ public class RelationController {
         return relationService.unfollow(unfollowUserReqVO);
     }
 
-    @PostMapping("/follower/list")
+    @PostMapping("/following/list")
     @ApiOperationLog(description = "查询用户关注列表")
-    public PageResponse<FindFollowerUserRespVO> findFollowerList(@Validated @RequestBody FindFollowerListReqVO findFollowerListReqVO) {
-        return relationService.findFollowerList(findFollowerListReqVO);
+    public PageResponse<FindFollowingUserRespVO> findFollowingList(@Validated @RequestBody FindFollowingListReqVO findFollowingListReqVO) {
+        return relationService.findFollowingList(findFollowingListReqVO);
     }
 
-    @PostMapping("/fan/list")
+    @PostMapping("/follower/list")
     @ApiOperationLog(description = "查询用户粉丝列表")
-    public PageResponse<FindFanUserRespVO> findFanList(@Validated @RequestBody FindFanListReqVO findFanListReqVO) {
-        return relationService.findFanList(findFanListReqVO);
+    public PageResponse<FindFollowerUserRespVO> findFollowerList(@Validated @RequestBody FindFollowerListReqVO findFollowerListReqVO) {
+        return relationService.findFollowerList(findFollowerListReqVO);
     }
 
 }

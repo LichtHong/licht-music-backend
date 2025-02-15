@@ -55,4 +55,30 @@ public class PostController {
     public Response<?> topPost(@Validated @RequestBody UpdatePostIsTopReqVO updatePostIsTopReqVO) {
         return postService.updatePostIsTop(updatePostIsTopReqVO);
     }
+
+    @PostMapping(value = "/like")
+    @ApiOperationLog(description = "点赞帖子")
+    public Response<?> likePost(@Validated @RequestBody LikePostReqVO likePostReqVO) {
+        return postService.likePost(likePostReqVO);
+    }
+
+    @PostMapping(value = "/unlike")
+    @ApiOperationLog(description = "取消点赞帖子")
+    public Response<?> unlikePost(@Validated @RequestBody UnlikePostReqVO unlikePostReqVO) {
+        return postService.unlikePost(unlikePostReqVO);
+    }
+
+    @PostMapping(value = "/collect")
+    @ApiOperationLog(description = "收藏帖子")
+    public Response<?> collectPost(@Validated @RequestBody CollectPostReqVO collectPostReqVO) {
+        return postService.collectPost(collectPostReqVO);
+    }
+
+    @PostMapping(value = "/uncollect")
+    @ApiOperationLog(description = "取消收藏帖子")
+    public Response<?> unCollectPost(@Validated @RequestBody UnCollectPostReqVO unCollectPostReqVO) {
+        return postService.unCollectPost(unCollectPostReqVO);
+    }
+
+
 }

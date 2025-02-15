@@ -3,6 +3,12 @@
   <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/licht-music-auth/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/licht-music-auth/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/licht-music-count/licht-music-count-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/licht-music-count/licht-music-count-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/licht-music-count/licht-music-count-biz/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/licht-music-count/licht-music-count-biz/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/licht-music-count/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/licht-music-count/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/licht-music-framework/licht-music-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/licht-music-framework/licht-music-common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/licht-music-framework/licht-music-spring-boot-starter-context/src/main/java" charset="UTF-8" />
@@ -45,6 +51,14 @@
     <file url="file://$PROJECT_DIR$/licht-music-relation/licht-music-relation-biz/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/licht-music-relation/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/licht-music-relation/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/licht-music-search/licht-music-search-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/licht-music-search/licht-music-search-api/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/licht-music-search/licht-music-search-biz/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/licht-music-search/licht-music-search-biz/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/licht-music-search/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/licht-music-search/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/licht-music-sync/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/licht-music-sync/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/licht-music-user/licht-music-user-api/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/licht-music-user/licht-music-user-api/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/licht-music-user/licht-music-user-biz/src/main/java" charset="UTF-8" />

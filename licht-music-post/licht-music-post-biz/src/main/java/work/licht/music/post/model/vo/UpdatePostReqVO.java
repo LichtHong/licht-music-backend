@@ -19,9 +19,7 @@ public class UpdatePostReqVO {
     @NotNull(message = "帖子类型不能为空")
     private Integer type;
 
-    private List<String> imgUri;
-
-    private String videoUri;
+    private String cover;
 
     private String title;
 

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="work.licht.music.sync.domain.mapper.CreateTableMapper">
+
+    <insert id="createSyncFollowingCountTempTable" parameterType="map">
+        CREATE TABLE IF NOT EXISTS `t_sync_following_count_temp_${tableNameSuffix}`
+        (
+            `id`      bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+            `user_id` bigint unsigned NOT NULL COMMENT '用户ID',
+            PRIMARY KEY (`id`) USING BTREE,
+            UNIQUE KEY `uk_user_id` (`user_id`)
+        ) ENGINE = InnoDB
+          DEFAULT CHARSET = utf8mb4
+          COLLATE = utf8mb4_unicode_ci COMMENT ='数据同步日增量表：关注数';
+    </insert>
+    
+    <insert id="createSyncFollowerCountTempTable" parameterType="map">
+        CREATE TABLE IF NOT EXISTS `t_sync_follower_count_temp_${tableNameSuffix}`
+        (
+            `id`      bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+            `user_id` bigint unsigned NOT NULL COMMENT '用户ID',
+            PRIMARY KEY (`id`) USING BTREE,
+            UNIQUE KEY `uk_user_id` (`user_id`)
+        ) ENGINE = InnoDB
+          DEFAULT CHARSET = utf8mb4
+          COLLATE = utf8mb4_unicode_ci COMMENT ='数据对齐日增量表：粉丝数';
+    </insert>
+
+    <insert id="createSyncPostCollectCountTempTable" parameterType="map">
+        CREATE TABLE IF NOT EXISTS `t_sync_post_collect_count_temp_${tableNameSuffix}`
+        (
+            `id`      bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+            `post_id` bigint unsigned NOT NULL COMMENT '帖子ID',
+            PRIMARY KEY (`id`) USING BTREE,
+            UNIQUE KEY `uk_post_id` (`post_id`)
+        ) ENGINE = InnoDB
+          DEFAULT CHARSET = utf8mb4
+          COLLATE = utf8mb4_unicode_ci COMMENT ='数据对齐日增量表：帖子获得收藏数';
+    </insert>
+
+    <insert id="createSyncPostLikeCountTempTable" parameterType="map">
+        CREATE TABLE IF NOT EXISTS `t_sync_post_like_count_temp_${tableNameSuffix}`
+        (
+            `id`      bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+            `post_id` bigint unsigned NOT NULL COMMENT '帖子ID',
+            PRIMARY KEY (`id`) USING BTREE,
+            UNIQUE KEY `uk_post_id` (`post_id`)
+        ) ENGINE = InnoDB
+          DEFAULT CHARSET = utf8mb4
+          COLLATE = utf8mb4_unicode_ci COMMENT ='数据对齐日增量表：帖子获得点赞数';
+    </insert>
+
+    <insert id="createSyncUserPublishCountTempTable" parameterType="map">
+        CREATE TABLE IF NOT EXISTS `t_sync_user_publish_count_temp_${tableNameSuffix}`
+        (
+            `id` bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+            `user_id` bigint unsigned NOT NULL COMMENT '用户ID',
+            PRIMARY KEY (`id`) USING BTREE,
+            UNIQUE KEY `uk_user_id` (`user_id`)
+        ) ENGINE = InnoDB
+          DEFAULT CHARSET = utf8mb4
+          COLLATE = utf8mb4_unicode_ci COMMENT ='数据对齐日增量表：用户维度发布帖子数';
+    </insert>
+
+    <insert id="createSyncUserLikeCountTempTable" parameterType="map">
+        CREATE TABLE IF NOT EXISTS `t_sync_user_like_count_temp_${tableNameSuffix}`
+        (
+            `id`      bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+            `user_id` bigint unsigned NOT NULL COMMENT '用户ID',
+            PRIMARY KEY (`id`) USING BTREE,
+            UNIQUE KEY `uk_user_id` (`user_id`)
+        ) ENGINE = InnoDB
+          DEFAULT CHARSET = utf8mb4
+          COLLATE = utf8mb4_unicode_ci COMMENT ='数据对齐日增量表：用户维度获得点赞数';
+    </insert>
+
+    <insert id="createSyncUserCollectCountTempTable" parameterType="map">
+        CREATE TABLE IF NOT EXISTS `t_sync_user_collect_count_temp_${tableNameSuffix}`
+        (
+            `id`      bigint unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+            `user_id` bigint unsigned NOT NULL COMMENT '用户ID',
+            PRIMARY KEY (`id`) USING BTREE,
+            UNIQUE KEY `uk_user_id` (`user_id`)
+        ) ENGINE = InnoDB
+          DEFAULT CHARSET = utf8mb4
+          COLLATE = utf8mb4_unicode_ci COMMENT ='数据对齐日增量表：用户维度获得收藏数';
+    </insert>
+
+</mapper>

@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class FollowerDO {
+
     private Long id;
 
     private Long userId;
@@ -19,4 +20,5 @@ public class FollowerDO {
     private Long followerUserId;
 
     private LocalDateTime createTime;
+
 }

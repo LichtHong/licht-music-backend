@@ -20,6 +20,10 @@ public enum ResponseCodeEnum implements BaseExceptionInterface {
     POST_UPDATE_FAIL("POST-20004", "帖子更新失败"),
     TOPIC_NOT_FOUND("POST-20005", "话题不存在"),
     POST_CANT_OPERATE("POST-20007", "您无法操作该帖子"),
+    POST_ALREADY_LIKED("POST-20008", "您已经点赞过该帖子"),
+    POST_NOT_LIKED("POST-20009", "您未点赞该篇帖子，无法取消点赞"),
+    POST_ALREADY_COLLECTED("POST-20010", "您已经收藏过该帖子"),
+    POST_NOT_COLLECTED("POST-20011", "您未收藏该篇帖子，无法取消收藏"),
     ;
 
     // 异常码

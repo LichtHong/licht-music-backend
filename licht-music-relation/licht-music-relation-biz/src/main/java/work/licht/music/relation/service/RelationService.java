@@ -13,8 +13,9 @@ public interface RelationService {
     Response<?> unfollow(UnfollowUserReqVO unfollowUserReqVO);
 
     // 查询关注列表
-    PageResponse<FindFollowerUserRespVO> findFollowerList(FindFollowerListReqVO findFollowerListReqVO);
+    PageResponse<FindFollowingUserRespVO> findFollowingList(FindFollowingListReqVO findFollowingListReqVO);
 
     // 查询粉丝列表
-    PageResponse<FindFanUserRespVO> findFanList(FindFanListReqVO findFanListReqVO);
+    PageResponse<FindFollowerUserRespVO> findFollowerList(FindFollowerListReqVO findFollowerListReqVO);
+
 }

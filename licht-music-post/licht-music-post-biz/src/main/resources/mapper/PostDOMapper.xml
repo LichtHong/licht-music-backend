@@ -4,45 +4,44 @@
   <resultMap id="BaseResultMap" type="work.licht.music.post.domain.model.PostDO">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="is_content_empty" jdbcType="BIT" property="isContentEmpty" />
     <result column="creator_id" jdbcType="BIGINT" property="creatorId" />
     <result column="topic_id" jdbcType="BIGINT" property="topicId" />
     <result column="topic_name" jdbcType="VARCHAR" property="topicName" />
     <result column="is_top" jdbcType="BIT" property="isTop" />
-    <result column="type" jdbcType="TINYINT" property="type" />
-    <result column="img_uri" jdbcType="VARCHAR" property="imgUri" />
-    <result column="video_uri" jdbcType="VARCHAR" property="videoUri" />
+    <result column="cover" jdbcType="VARCHAR" property="cover" />
     <result column="content_uuid" jdbcType="VARCHAR" property="contentUuid" />
     <result column="visible" jdbcType="TINYINT" property="visible" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="status" jdbcType="TINYINT" property="status" />
   </resultMap>
-  <sql id="Base_Column_List">
-    id, title, is_content_empty, creator_id, topic_id, topic_name, is_top, `type`, img_uri, 
-    video_uri, content_uuid, visible, create_time, update_time, `status`
-  </sql>
+  <sql id="Base_Column_List">id, title, creator_id, topic_id, topic_name, is_top,
+  cover, content_uuid, visible, create_time, update_time, `status`</sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from t_post
     where id = #{id,jdbcType=BIGINT} and status = 1
   </select>
+  <select id="selectCountByPostId" resultType="int">
+    select count(1) from t_post where id = #{postId} and status = 1
+  </select>
+  <select id="selectCreatorIdByPostId" resultType="long">
+    select creator_id from t_post where id = #{postId} and status = 1
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_post
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="work.licht.music.post.domain.model.PostDO">
-    insert into t_post (id, title, is_content_empty, 
-      creator_id, topic_id, topic_name, 
-      is_top, `type`, img_uri, video_uri, 
-      content_uuid, visible, create_time, 
-      update_time, `status`)
-    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{isContentEmpty,jdbcType=BIT}, 
-      #{creatorId,jdbcType=BIGINT}, #{topicId,jdbcType=BIGINT}, #{topicName,jdbcType=VARCHAR}, 
-      #{isTop,jdbcType=BIT}, #{type,jdbcType=TINYINT}, #{imgUri,jdbcType=VARCHAR}, #{videoUri,jdbcType=VARCHAR}, 
-      #{contentUuid,jdbcType=VARCHAR}, #{visible,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT})
+    insert into t_post (id, title, creator_id,
+      topic_id, topic_name, is_top,
+      cover, content_uuid, visible,
+      create_time, update_time, `status`)
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{creatorId,jdbcType=BIGINT},
+            #{topicId,jdbcType=BIGINT}, #{topicName,jdbcType=VARCHAR}, #{isTop,jdbcType=BIT},
+            #{cover,jdbcType=VARCHAR}, #{contentUuid,jdbcType=VARCHAR}, #{visible,jdbcType=TINYINT},
+            #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="work.licht.music.post.domain.model.PostDO">
     insert into t_post
@@ -52,9 +51,6 @@
       </if>
       <if test="title != null">
         title,
-      </if>
-      <if test="isContentEmpty != null">
-        is_content_empty,
       </if>
       <if test="creatorId != null">
         creator_id,
@@ -68,14 +64,8 @@
       <if test="isTop != null">
         is_top,
       </if>
-      <if test="type != null">
-        `type`,
-      </if>
-      <if test="imgUri != null">
-        img_uri,
-      </if>
-      <if test="videoUri != null">
-        video_uri,
+      <if test="cover != null">
+        cover,
       </if>
       <if test="contentUuid != null">
         content_uuid,
@@ -100,9 +90,6 @@
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
       </if>
-      <if test="isContentEmpty != null">
-        #{isContentEmpty,jdbcType=BIT},
-      </if>
       <if test="creatorId != null">
         #{creatorId,jdbcType=BIGINT},
       </if>
@@ -115,14 +102,8 @@
       <if test="isTop != null">
         #{isTop,jdbcType=BIT},
       </if>
-      <if test="type != null">
-        #{type,jdbcType=TINYINT},
-      </if>
-      <if test="imgUri != null">
-        #{imgUri,jdbcType=VARCHAR},
-      </if>
-      <if test="videoUri != null">
-        #{videoUri,jdbcType=VARCHAR},
+      <if test="cover != null">
+        #{cover,jdbcType=VARCHAR},
       </if>
       <if test="contentUuid != null">
         #{contentUuid,jdbcType=VARCHAR},
@@ -147,9 +128,6 @@
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="isContentEmpty != null">
-        is_content_empty = #{isContentEmpty,jdbcType=BIT},
-      </if>
       <if test="creatorId != null">
         creator_id = #{creatorId,jdbcType=BIGINT},
       </if>
@@ -162,14 +140,8 @@
       <if test="isTop != null">
         is_top = #{isTop,jdbcType=BIT},
       </if>
-      <if test="type != null">
-        `type` = #{type,jdbcType=TINYINT},
-      </if>
-      <if test="imgUri != null">
-        img_uri = #{imgUri,jdbcType=VARCHAR},
-      </if>
-      <if test="videoUri != null">
-        video_uri = #{videoUri,jdbcType=VARCHAR},
+      <if test="cover != null">
+        cover = #{cover,jdbcType=VARCHAR},
       </if>
       <if test="contentUuid != null">
         content_uuid = #{contentUuid,jdbcType=VARCHAR},
@@ -192,12 +164,9 @@
   <update id="updateByPrimaryKey" parameterType="work.licht.music.post.domain.model.PostDO">
     update t_post
     set title = #{title,jdbcType=VARCHAR},
-      is_content_empty = #{isContentEmpty,jdbcType=BIT},
       topic_id = #{topicId,jdbcType=BIGINT},
       topic_name = #{topicName,jdbcType=VARCHAR},
-      `type` = #{type,jdbcType=TINYINT},
-      img_uri = #{imgUri,jdbcType=VARCHAR},
-      video_uri = #{videoUri,jdbcType=VARCHAR},
+      cover = #{cover,jdbcType=VARCHAR},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}
   </update>

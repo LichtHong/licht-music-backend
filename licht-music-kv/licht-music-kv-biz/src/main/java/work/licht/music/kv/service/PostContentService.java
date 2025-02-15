@@ -1,10 +1,10 @@
 package work.licht.music.kv.service;
 
 import work.licht.music.common.response.Response;
-import work.licht.music.kv.dto.req.AddPostContentReqDTO;
-import work.licht.music.kv.dto.req.DeletePostContentReqDTO;
-import work.licht.music.kv.dto.req.FindPostContentReqDTO;
-import work.licht.music.kv.dto.resp.FindPostContentRespDTO;
+import work.licht.music.kv.model.dto.req.AddPostContentReqDTO;
+import work.licht.music.kv.model.dto.req.DeletePostContentReqDTO;
+import work.licht.music.kv.model.dto.req.FindPostContentReqDTO;
+import work.licht.music.kv.model.dto.resp.FindPostContentRespDTO;
 
 public interface PostContentService {
 

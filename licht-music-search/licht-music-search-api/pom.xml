@@ -1,0 +1,36 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>work.licht.music</groupId>
+        <artifactId>licht-music-search</artifactId>
+        <version>${revision}</version>
+    </parent>
+
+    <groupId>work.licht.music.search</groupId>
+    <artifactId>licht-music-search-api</artifactId>
+    <name>licht-music-search-api</name>
+    <description>搜索服务RPC层</description>
+
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <!-- OpenFeign -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <!-- 负载均衡 -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>work.licht.music.common</groupId>
+            <artifactId>licht-music-common</artifactId>
+        </dependency>
+    </dependencies>
+</project>

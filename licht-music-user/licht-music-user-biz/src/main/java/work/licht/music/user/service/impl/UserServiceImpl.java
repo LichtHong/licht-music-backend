@@ -244,9 +244,7 @@ public class UserServiceImpl implements UserService {
         return Response.success(findUserByPhoneRspDTO);
     }
 
-    /**
-     * 批量根据用户 ID 查询用户信息
-     */
+    // 批量根据用户 ID 查询用户信息
     @Override
     public Response<List<FindUserByIdRespDTO>> findByIds(FindUsersByIdsReqDTO findUsersByIdsReqDTO) {
         // 需要查询的用户 ID 集合
@@ -275,7 +273,7 @@ public class UserServiceImpl implements UserService {
             return Response.success(findUserByIdRspDTOS);
         }
         // 筛选出缓存里没有的用户数据，去查数据库
-        List<Long> userIdsNeedQuery = null;
+        List<Long> userIdsNeedQuery;
         if (CollUtil.isNotEmpty(findUserByIdRspDTOS)) {
             // 将 findUserInfoByIdRspDTOS 集合转 Map
             Map<Long, FindUserByIdRespDTO> map = findUserByIdRspDTOS.stream()
@@ -332,6 +330,7 @@ public class UserServiceImpl implements UserService {
         return Response.success(findUserByIdRspDTOS);
     }
 
+    // 修改密码
     @Override
     public Response<?> updatePassword(UpdateUserPasswordReqDTO updateUserPasswordReqDTO) {
         // 获取当前请求对应的用户 ID

@@ -4,25 +4,31 @@ import com.google.common.util.concurrent.RateLimiter;
 import com.google.gson.Gson;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.rocketmq.client.producer.SendCallback;
+import org.apache.rocketmq.client.producer.SendResult;
 import org.apache.rocketmq.common.message.Message;
 import org.apache.rocketmq.spring.annotation.ConsumeMode;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.scripting.support.ResourceScriptSource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionTemplate;
 import work.licht.music.common.util.DateUtils;
 import work.licht.music.relation.constant.RedisKeyConstants;
 import work.licht.music.relation.constant.RocketMQConstants;
-import work.licht.music.relation.domain.mapper.FanDOMapper;
 import work.licht.music.relation.domain.mapper.FollowerDOMapper;
-import work.licht.music.relation.domain.model.FanDO;
+import work.licht.music.relation.domain.mapper.FollowingDOMapper;
 import work.licht.music.relation.domain.model.FollowerDO;
-import work.licht.music.relation.model.vo.FollowUserMqDTO;
-import work.licht.music.relation.model.vo.UnfollowUserMqDTO;
+import work.licht.music.relation.domain.model.FollowingDO;
+import work.licht.music.relation.enums.FollowUnfollowTypeEnum;
+import work.licht.music.relation.model.dto.CountFollowUnfollowMqDTO;
+import work.licht.music.relation.model.dto.FollowUserMqDTO;
+import work.licht.music.relation.model.dto.UnfollowUserMqDTO;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -38,13 +44,15 @@ import java.util.Objects;
 public class FollowUnfollowConsumer implements RocketMQListener<Message> {
 
     @Resource
-    private FollowerDOMapper followerDOMapper;
+    private FollowingDOMapper followingDOMapper;
     @Resource
-    private FanDOMapper fanDOMapper;
+    private FollowerDOMapper followerDOMapper;
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
     @Resource
     private TransactionTemplate transactionTemplate;
+    @Resource
+    private RocketMQTemplate rocketMQTemplate;
     @Resource
     private RateLimiter rateLimiter;
     @Resource
@@ -83,19 +91,19 @@ public class FollowUnfollowConsumer implements RocketMQListener<Message> {
             try {
                 // 关注成功需往数据库添加两条记录
                 // 关注表：一条记录
-                int count = followerDOMapper.insert(FollowerDO.builder()
+                int count = followingDOMapper.insert(FollowingDO.builder()
                         .userId(userId)
-                        .followerUserId(followUserId)
+                        .followingUserId(followUserId)
                         .createTime(createTime)
                         .build());
                 // 粉丝表：一条记录
                 if (count > 0) {
-                    FanDO fanDO = FanDO.builder()
+                    FollowerDO followerDO = FollowerDO.builder()
                             .userId(followUserId)
-                            .fanUserId(userId)
+                            .followerUserId(userId)
                             .createTime(createTime)
                             .build();
-                    fanDOMapper.insert(fanDO);
+                    followerDOMapper.insert(followerDO);
                 }
                 return true;
             } catch (Exception ex) {
@@ -109,14 +117,23 @@ public class FollowUnfollowConsumer implements RocketMQListener<Message> {
         if (isSuccess) {
             // Lua 脚本
             DefaultRedisScript<Long> script = new DefaultRedisScript<>();
-            script.setScriptSource(new ResourceScriptSource(new ClassPathResource("/lua/follow_check_and_update_fan_zset.lua")));
+            script.setScriptSource(new ResourceScriptSource(new ClassPathResource("/lua/follow_check_and_update_follower_zset.lua")));
             script.setResultType(Long.class);
             // 时间戳
             long timestamp = DateUtils.localDateTime2Timestamp(createTime);
             // 构建被关注用户的粉丝列表 Redis Key
-            String fanRedisKey = RedisKeyConstants.buildUserFanKey(followUserId);
+            String followerRedisKey = RedisKeyConstants.buildUserFollowerKey(followUserId);
             // 执行脚本
-            redisTemplate.execute(script, Collections.singletonList(fanRedisKey), userId, timestamp);
+            redisTemplate.execute(script, Collections.singletonList(followerRedisKey), userId, timestamp);
+            // 发送 MQ 通知计数服务：统计关注数
+            // 构建消息体 DTO
+            CountFollowUnfollowMqDTO countFollowUnfollowMqDTO = CountFollowUnfollowMqDTO.builder()
+                    .userId(userId)
+                    .targetUserId(followUserId)
+                    .type(FollowUnfollowTypeEnum.FOLLOW.getCode()) // 关注
+                    .build();
+            // 发送 MQ
+            sendMQ(countFollowUnfollowMqDTO);
         }
     }
 
@@ -134,9 +151,9 @@ public class FollowUnfollowConsumer implements RocketMQListener<Message> {
             try {
                 // 取关成功需要删除数据库两条记录
                 // 关注表：一条记录
-                int count = followerDOMapper.deleteByUserIdAndFollowerUserId(userId, unfollowUserId);
+                int count = followingDOMapper.deleteByUserIdAndFollowingUserId(userId, unfollowUserId);
                 // 粉丝表：一条记录
-                if (count > 0) fanDOMapper.deleteByUserIdAndFanUserId(unfollowUserId, userId);
+                if (count > 0) followerDOMapper.deleteByUserIdAndFollowerUserId(unfollowUserId, userId);
                 return true;
             } catch (Exception ex) {
                 status.setRollbackOnly(); // 标记事务为回滚
@@ -147,11 +164,38 @@ public class FollowUnfollowConsumer implements RocketMQListener<Message> {
         // 若数据库删除成功，更新 Redis，将自己从被取注用户的 ZSet 粉丝列表删除
         if (isSuccess) {
             // 被取关用户的粉丝列表 Redis Key
-            String fanRedisKey = RedisKeyConstants.buildUserFanKey(unfollowUserId);
+            String followerRedisKey = RedisKeyConstants.buildUserFollowerKey(unfollowUserId);
             // 删除指定粉丝
-            redisTemplate.opsForZSet().remove(fanRedisKey, userId);
+            redisTemplate.opsForZSet().remove(followerRedisKey, userId);
         }
     }
 
-
+    // 发送 MQ 通知计数服务
+    private void sendMQ(CountFollowUnfollowMqDTO countFollowUnfollowMqDTO) {
+        // 构建消息对象，并将 DTO 转成 Json 字符串设置到消息体中
+        org.springframework.messaging.Message<String> message = MessageBuilder.withPayload(gson.toJson(countFollowUnfollowMqDTO))
+                .build();
+        // 异步发送 MQ 消息
+        rocketMQTemplate.asyncSend(RocketMQConstants.TOPIC_COUNT_FOLLOWING, message, new SendCallback() {
+            @Override
+            public void onSuccess(SendResult sendResult) {
+                log.info("==> 【计数服务：关注数】MQ 发送成功，SendResult: {}", sendResult);
+            }
+            @Override
+            public void onException(Throwable throwable) {
+                log.error("==> 【计数服务：关注数】MQ 发送异常: ", throwable);
+            }
+        });
+        // 发送 MQ 通知计数服务：统计粉丝数
+        rocketMQTemplate.asyncSend(RocketMQConstants.TOPIC_COUNT_FOLLOWER, message, new SendCallback() {
+            @Override
+            public void onSuccess(SendResult sendResult) {
+                log.info("==> 【计数服务：粉丝数】MQ 发送成功，SendResult: {}", sendResult);
+            }
+            @Override
+            public void onException(Throwable throwable) {
+                log.error("==> 【计数服务：粉丝数】MQ 发送异常: ", throwable);
+            }
+        });
+    }
 }

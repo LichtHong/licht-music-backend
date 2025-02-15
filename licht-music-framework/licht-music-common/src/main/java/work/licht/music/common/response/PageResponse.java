@@ -10,7 +10,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 public class PageResponse<T> extends Response<List<T>> {
 
-    private long pageNo; // 当前页码
+    private long currentPage; // 当前页码
     private long totalCount; // 总数据量
     private long pageSize; // 每页展示的数据量
     private long totalPage; // 总页数
@@ -23,7 +23,7 @@ public class PageResponse<T> extends Response<List<T>> {
         PageResponse<T> pageResponse = new PageResponse<>();
         pageResponse.setSuccess(true);
         pageResponse.setData(data);
-        pageResponse.setPageNo(pageNo);
+        pageResponse.setCurrentPage(pageNo);
         pageResponse.setTotalCount(totalCount);
         pageResponse.setPageSize(pageSize);
         // 计算总页数

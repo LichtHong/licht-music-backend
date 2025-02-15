@@ -4,6 +4,7 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
+import work.licht.music.common.constant.DateConstants;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -17,7 +18,7 @@ public class LocalDateJsonAdapter extends TypeAdapter<LocalDate> {
             jsonWriter.nullValue();
             return;
         }
-        jsonWriter.jsonValue(String.format("\"%s\"", localDate.format(DateTimeFormatter.ISO_LOCAL_DATE)));
+        jsonWriter.jsonValue(String.format("\"%s\"", localDate.format(DateConstants.DATE_FORMAT_Y_M_D)));
     }
 
     @Override
@@ -26,7 +27,7 @@ public class LocalDateJsonAdapter extends TypeAdapter<LocalDate> {
             jsonReader.nextNull();
             return null;
         }
-        return LocalDate.parse(jsonReader.nextString(), DateTimeFormatter.ISO_LOCAL_DATE);
+        return LocalDate.parse(jsonReader.nextString(), DateConstants.DATE_FORMAT_Y_M_D);
     }
 
 }

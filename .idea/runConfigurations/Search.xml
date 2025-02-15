@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Search" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="licht-music-search-biz" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="work.licht.music.search.LichtMusicSearchApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

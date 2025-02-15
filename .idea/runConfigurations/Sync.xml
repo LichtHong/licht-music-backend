@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Sync" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="licht-music-sync" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="work.licht.music.sync.LichtMusicSyncApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

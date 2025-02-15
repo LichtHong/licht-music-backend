@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Count" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="licht-music-count-biz" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="work.licht.music.count.LichtMusicCountBizApplication" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

@@ -17,13 +17,11 @@ public class FindPostDetailRespVO {
 
     private Long id;
 
-    private Integer type;
-
     private String title;
 
     private String content;
 
-    private List<String> imgUri;
+    private String cover;
 
     private Long topicId;
 
@@ -34,8 +32,6 @@ public class FindPostDetailRespVO {
     private String creatorName;
 
     private String avatar;
-
-    private String videoUri;
 
     private LocalDateTime updateTime;
 

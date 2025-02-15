@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="work.licht.music.sync.domain.mapper.InsertMapper">
+
+    <insert id="insert2SyncPostLikeCountTempTable" parameterType="map">
+        insert into `t_sync_post_like_count_temp_${tableNameSuffix}` (post_id) values (#{postId})
+    </insert>
+
+    <insert id="insert2SyncPostCollectCountTempTable" parameterType="map">
+        insert into `t_sync_post_collect_count_temp_${tableNameSuffix}` (postId) values (#{postId})
+    </insert>
+
+    <insert id="insert2SyncUserLikeCountTempTable" parameterType="map">
+        insert into `t_sync_user_like_count_temp_${tableNameSuffix}` (user_id) values (#{userId})
+    </insert>
+
+    <insert id="insert2SyncUserCollectCountTempTable" parameterType="map">
+        insert into `t_sync_user_collect_count_temp_${tableNameSuffix}` (user_id) values (#{userId})
+    </insert>
+    
+    <insert id="insert2SyncUserNotePublishCountTempTable" parameterType="map">
+        insert into `t_sync_user_publish_count_temp_${tableNameSuffix}` (user_id) values (#{userId})
+    </insert>
+
+    <insert id="insert2SyncUserFollowingCountTempTable" parameterType="map">
+        insert into `t_sync_following_count_temp_${tableNameSuffix}` (user_id) values (#{userId})
+    </insert>
+
+    <insert id="insert2SyncUserFollowerCountTempTable" parameterType="map">
+        insert into `t_sync_follower_count_temp_${tableNameSuffix}` (user_id) values (#{userId})
+    </insert>
+    
+</mapper>

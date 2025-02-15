@@ -16,8 +16,6 @@ public class PostDO {
 
     private String title;
 
-    private Boolean isContentEmpty;
-
     private Long creatorId;
 
     private Long topicId;
@@ -26,11 +24,7 @@ public class PostDO {
 
     private Boolean isTop;
 
-    private Integer type;
-
-    private String imgUri;
-
-    private String videoUri;
+    private String cover;
 
     private String contentUuid;
 

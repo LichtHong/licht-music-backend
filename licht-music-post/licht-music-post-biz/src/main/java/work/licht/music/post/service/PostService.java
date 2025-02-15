@@ -24,4 +24,16 @@ public interface PostService {
     // 删除本地帖子缓存
     void deletePostLocalCache(Long postId);
 
+    // 点赞帖子
+    Response<?> likePost(LikePostReqVO likePostReqVO);
+
+    // 取消点赞帖子
+    Response<?> unlikePost(UnlikePostReqVO unlikePostReqVO);
+
+    // 收藏帖子
+    Response<?> collectPost(CollectPostReqVO collectPostReqVO);
+
+    // 取消收藏帖子
+    Response<?> unCollectPost(UnCollectPostReqVO unCollectPostReqVO);
+
 }

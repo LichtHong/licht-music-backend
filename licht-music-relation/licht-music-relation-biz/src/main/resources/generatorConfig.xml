@@ -32,13 +32,13 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="work.licht.music.relation.domain.mapper"
                              targetProject="src/main/java"/>
         <!-- 需要生成的表-实体类 -->
-        <table tableName="t_follower" domainObjectName="FollowerDO"
+        <table tableName="t_following" domainObjectName="FollowingDO"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
                enableSelectByExample="false"
                selectByExampleQueryId="false"/>
-        <table tableName="t_fan" domainObjectName="FanDO"
+        <table tableName="t_follower" domainObjectName="FollowerDO"
                enableCountByExample="false"
                enableUpdateByExample="false"
                enableDeleteByExample="false"
